@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels: {{ include "ks.labels" (merge (dict "service" .Values.arabox_test.appKubernetesIoService) $) | nindent 4 }}
+  name: {{ template "ks.fullname" . }}-arabox-landing
+spec:
+  replicas: {{ $.Values.arabox_test.replicas }}
+  selector:
+    matchLabels:
+      {{- include "ks.selectorLabels" (merge (dict "service" .Values.arabox_test.appKubernetesIoService) $) | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        {{- include "ks.labels" (merge (dict "service" .Values.arabox_test.appKubernetesIoService) $) | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.arabox_test.appKubernetesIoService }}
+          env:
+            - name: VUE_APP_API_ROOT_URL
+              value: {{ .Values.arabox_test.api_url }}
+          image: {{ .Values.arabox_test.image }}
+          resources:
+            limits:
+              memory: {{ .Values.arabox_test.resources.limits.memory }}
+              cpu: {{ .Values.arabox_test.resources.limits.cpu }}
+            requests:
+              cpu: {{ .Values.arabox_test.resources.requests.cpu }}
+              memory: {{ .Values.arabox_test.resources.requests.memory }}
+          #command: ["/app/docker-entrypoint.sh"]
+          ports:
+            - containerPort: {{ .Values.arabox_test.port }}
+      {{- if and $.Values.global.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range $.Values.global.imagePullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      restartPolicy: Always

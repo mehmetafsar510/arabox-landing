@@ -1,0 +1,29 @@
+nameOverride: ""
+fullnameOverride: ""
+
+global:
+  imagePullSecrets:
+    - arabox-landing-pull
+
+  ingress:
+    enabled: false
+    class:
+    domain: arabox-test.westerops.com
+    sslRedirect: true
+
+arabox_test:
+  api_url: 'https://smartdashboard.arabox-test.westerops.com/'
+  replicas: 1
+  nameSuffix: frontend
+  hostPrefix: smartdashboard.arabox-test
+  appKubernetesIoService: smartdashboard-landing
+  port: 80
+  image: registry.docker.dev.westerops.com/arabox-landingpage:v7
+  resources:
+    limits:
+      memory: 1Gi
+      cpu: 250m
+    requests:
+      memory: 250Mi
+      cpu: 100m
+

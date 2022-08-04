@@ -1,0 +1,12 @@
+apiVersion: v2
+appVersion: 1.0.1
+version: 1.0.1
+name: ibb-miniapp-ibb-hava-durumu
+description: A Helm chart for IBB miniapp ibb-hava-durumu
+
+type: application
+
+dependencies:
+  - name: tpllib
+    version: 0.3.1
+    repository: https://charts.kobil.com
