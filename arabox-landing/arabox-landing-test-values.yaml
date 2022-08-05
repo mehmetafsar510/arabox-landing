@@ -4,7 +4,6 @@ fullnameOverride: ""
 global:
   imagePullSecrets:
     - arabox-landing-pull
-
   ingress:
     enabled: false
     class:
@@ -12,12 +11,12 @@ global:
     sslRedirect: true
 
 arabox_test:
-  api_url: 'https://smartdashboard.arabox-test.westerops.com/'
+  api_url: 'https://smartdashboardlanding.arabox-test.westerops.com/'
   replicas: 1
   nameSuffix: frontend
-  hostPrefix: smartdashboard.arabox-test
+  hostPrefix: smartdashboardlanding.arabox-test
   appKubernetesIoService: smartdashboard-landing
-  port: 80
+  port: 3000
   image: registry.docker.dev.westerops.com/arabox-landingpage:v7
   resources:
     limits:

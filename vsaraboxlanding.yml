@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: shift-araboxlanding-admin
+  namespace: shift
+spec:
+  gateways:
+  - arabox-admin
+  hosts:
+  - smartdashboardlanding.{cname_plus}
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: smartdashboard-landing
+        port:
+          number: 3000
